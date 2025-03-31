@@ -1,6 +1,8 @@
 <?php
 
-class Database {
+namespace config;
+class Database
+{
     private static $instance = null;
     private $databaseConnection;
     private $host;
@@ -8,7 +10,8 @@ class Database {
     private $userName;
     private $password;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->host = "localhost";
         $this->databaseName = "store";
         $this->userName = "root";
@@ -28,14 +31,16 @@ class Database {
         }
     }
 
-    public static function getInstance() {
+    public static function getInstance()
+    {
         if (self::$instance === null) {
             self::$instance = new Database();
         }
         return self::$instance;
     }
 
-    public function getConnection() {
+    public function getConnection()
+    {
         return $this->conn;
     }
 }

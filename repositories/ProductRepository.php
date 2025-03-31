@@ -2,7 +2,7 @@
 
 namespace repositories;
 
-use Database;
+use config\Database;
 use repositories\interface\IProductRepository;
 
 require_once "config/Database.php";
