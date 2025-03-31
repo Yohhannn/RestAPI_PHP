@@ -1,28 +1,30 @@
 <?php
 
-require_once "repositories\ProductRepository.php";
-require_once "repositories\interface\IProductRepository.php";
 
-class ProductController {
+require_once "repositories/ProductRepository.php";
+require_once "repositories/interface/IProductRepository.php";
+
+class ProductController
+{
     private IProductRepository $productRepository;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->productRepository = new ProductRepository();
     }
 
-    public function GetAllProduct() 
+    public function GetAllProduct()
     {
-        // Return All ProductId, ProductName, ProductPrice, ProductDate and its Prices
+        echo json_encode($this->productRepository->GetAllProduct());
     }
 
-    public function GetLatestPriceOfTheProduct() 
+    public function GetLatestPriceOfTheProduct()
     {
-        // Return Products with Latest Price
+        echo json_encode($this->productRepository->GetLatestPriceOfTheProduct());
     }
 
-    public function GetProductById($productId) 
+    public function GetProductById($productId)
     {
         echo json_encode($this->productRepository->GetProductById($productId));
     }
-
 }
