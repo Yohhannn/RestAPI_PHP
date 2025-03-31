@@ -1,7 +1,7 @@
 <?php
-
 namespace repositories;
 
+use PDO;
 use config\Database;
 use repositories\interface\IProductRepository;
 
