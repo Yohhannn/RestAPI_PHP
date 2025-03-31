@@ -14,10 +14,10 @@ class Database {
     private $password;
 
     public function __construct() {
-        $this->host = $_ENV['DB_HOST'];
-        $this->databaseName = $_ENV['DB_NAME'];
-        $this->userName = $_ENV['DB_USER'];
-        $this->password = $_ENV['DB_PASS'];
+        $this->host = $_ENV['localhost'];
+        $this->databaseName = $_ENV['phprest'];
+        $this->userName = $_ENV[''];
+        $this->password = $_ENV[''];
 
         try {
             $this->conn = new PDO(

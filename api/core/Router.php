@@ -11,6 +11,7 @@ class Router {
     private function defineRoutes() {
         $this->routes = [
             'GET' => [
+                '' => function() { echo json_encode(["message" => "API is running"]); }, // Default route
                 'department' => [DepartmentController::class, 'GetAllDepartment'],
                 'department/{id}' => [DepartmentController::class, 'GetDepartmentById'],
             ],
@@ -25,23 +26,20 @@ class Router {
             ],
         ];
     }
-    
+
     public function handleRequest() {
-        $requestMethod = $_SERVER['REQUEST_METHOD']; 
+        $requestMethod = $_SERVER['REQUEST_METHOD'];
         $requestUri = $this->getProcessedUri();
-    
+
         if (!isset($this->routes[$requestMethod])) {
             $this->sendNotFound();
             return;
         }
-    
+
         foreach ($this->routes[$requestMethod] as $route => $handler) {
             $pattern = $this->convertToRegex($route);
-    
             if (preg_match($pattern, $requestUri, $matches)) {
-                array_shift($matches); // Remove full match
-    
-                // Only pass request data for POST and PUT methods
+                array_shift($matches);
                 if ($requestMethod === 'POST' || $requestMethod === 'PUT') {
                     $requestData = $this->getRequestData();
                     $this->dispatch($handler, array_merge([$requestData], $matches));
@@ -51,30 +49,39 @@ class Router {
                 return;
             }
         }
-    
+
         $this->sendNotFound();
-    }    
+    }
 
     private function getProcessedUri(): string {
-        $requestUri = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
-        $scriptName = dirname($_SERVER["SCRIPT_NAME"]);
-        return trim(str_replace($scriptName, "", $requestUri), "/");
+        $requestUri = trim(parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH), "/");
+        $scriptName = trim(dirname($_SERVER["SCRIPT_NAME"]), "/");
+
+        if (!empty($scriptName) && strpos($requestUri, $scriptName) === 0) {
+            $requestUri = substr($requestUri, strlen($scriptName));
+        }
+
+        return trim($requestUri, "/");
     }
 
     private function convertToRegex(string $route): string {
-        $pattern = preg_replace('/\{(\w+)\}/', '(\\d+)', $route); 
+        $pattern = preg_replace('/\{(\w+)\}/', '([\w-]+)', $route);
         return '/^' . str_replace('/', '\/', $pattern) . '$/';
     }
-    
+
     private function getRequestData() {
         $data = json_decode(file_get_contents('php://input'), true);
         return is_array($data) ? $data : []; // Ensure it's an array
     }
 
-    private function dispatch(array $handler, array $params) {
-        [$controllerClass, $method] = $handler;
-        $controller = new $controllerClass();
-        call_user_func_array([$controller, $method], $params);
+    private function dispatch($handler, array $params) {
+        if (is_callable($handler)) {
+            call_user_func_array($handler, $params);
+        } else {
+            [$controllerClass, $method] = $handler;
+            $controller = new $controllerClass();
+            call_user_func_array([$controller, $method], $params);
+        }
     }
 
     private function sendNotFound() {

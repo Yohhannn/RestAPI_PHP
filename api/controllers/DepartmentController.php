@@ -1,5 +1,5 @@
 <?php
-require_once "repositories\DepartementRepository.php";
+require_once "repositories\DepartmentRepository.php";
 require_once "config\Database.php"; // Ensure Database class is included
 
 class DepartmentController {
