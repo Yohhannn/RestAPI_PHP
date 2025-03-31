@@ -1,5 +1,5 @@
-http://localhost/PhpApiExample/Product/latest - GET LATEST PRODUCT PRICES
-http://localhost/PhpApiExample/Product/ - GET ALL PRODUCTS
+http://localhost/PhpApiExample/Product/latest - GET LATEST PRODUCT PRICES <br>
+http://localhost/PhpApiExample/Product/ - GET ALL PRODUCTS <br>
 http://localhost/PhpApiExample/Product/{id} - GET A SPECIFIC PRODUCT USING ID
 
 
