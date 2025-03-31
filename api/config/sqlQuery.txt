@@ -1,0 +1,34 @@
+CREATE TABLE PRODUCT (
+    ProductId INT PRIMARY KEY AUTO_INCREMENT,
+    ProductName VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE PRODUCTDETAILS (
+    ProductDetailId INT PRIMARY KEY AUTO_INCREMENT,
+    ProductPrice DECIMAL(10,2) NOT NULL,
+    ProductDate DATE NOT NULL,
+    ProductId INT,
+    FOREIGN KEY (ProductId) REFERENCES PRODUCT(ProductId)
+);
+
+INSERT INTO PRODUCT (ProductName) VALUES 
+('Laptop'), 
+('Smartphone'), 
+('Tablet'), 
+('Headphones'), 
+('Smartwatch');
+
+INSERT INTO PRODUCTDETAILS (ProductPrice, ProductDate, ProductId) VALUES 
+(1000.00, '2024-01-01', 1),
+(1050.00, '2024-02-15', 1),
+(1100.00, '2024-03-10', 1),
+(700.00, '2024-01-05', 2),
+(750.00, '2024-02-10', 2),
+(730.00, '2024-02-20', 2),
+(500.00, '2024-01-10', 3),
+(550.00, '2024-03-01', 3),
+(150.00, '2024-02-01', 4),
+(180.00, '2024-03-15', 4),
+(200.00, '2024-01-20', 5),
+(250.00, '2024-02-28', 5),
+(240.00, '2024-03-05', 5);

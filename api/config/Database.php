@@ -1,10 +1,5 @@
 <?php
 
-require __DIR__ . '../../../vendor/autoload.php';
-
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../../');
-$dotenv->load();
-
 class Database {
     private static $instance = null;
     private $databaseConnection;
@@ -14,10 +9,10 @@ class Database {
     private $password;
 
     public function __construct() {
-        $this->host = $_ENV['localhost'];
-        $this->databaseName = $_ENV['phprest'];
-        $this->userName = $_ENV[''];
-        $this->password = $_ENV[''];
+        $this->host = "localhost";
+        $this->databaseName = "store";
+        $this->userName = "root";
+        $this->password = "";
 
         try {
             $this->conn = new PDO(
