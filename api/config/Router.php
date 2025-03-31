@@ -1,5 +1,7 @@
 <?php
 
+use controllers\ProductController;
+
 require_once __DIR__ . '/../controllers/ProductController.php';
 
 class Router {

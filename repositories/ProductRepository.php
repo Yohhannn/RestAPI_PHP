@@ -1,13 +1,21 @@
 <?php
+
+namespace repositories;
+
+use Database;
+use repositories\interface\IProductRepository;
+
 require_once "config/Database.php";
 require_once "repositories/interface/IProductRepository.php";
 
-class ProductRepository implements IProductRepository {
+class ProductRepository implements IProductRepository
+{
     private $databaseConnection;
     private Database $database;
 
-    public function __construct() {
-        $this->database =  Database::getInstance();
+    public function __construct()
+    {
+        $this->database = Database::getInstance();
         $this->databaseConnection = $this->database->getConnection();
     }
 
@@ -63,7 +71,8 @@ class ProductRepository implements IProductRepository {
         return $this->ExecuteSqlQuery($query, $params);
     }
 
-    private function ExecuteSqlQuery(string $query, array $params) {
+    private function ExecuteSqlQuery(string $query, array $params)
+    {
         $statementObject = $this->databaseConnection->prepare($query);
         $statementObject->execute($params);
 

@@ -1,6 +1,11 @@
 <?php
 
 
+namespace controllers;
+
+use repositories\interface\IProductRepository;
+use repositories\ProductRepository;
+
 require_once "repositories/ProductRepository.php";
 require_once "repositories/interface/IProductRepository.php";
 
